@@ -33,6 +33,14 @@ Route::middleware('auth')->group(function(){
     Route::post('/events/store', [EventController::class, 'store'])->name('events/store');
     Route::patch('/events/update/{id}', [EventController::class, 'update'])->name('events/update');
     Route::delete('/events/delete/{id}', [EventController::class, 'delete'])->name('events/delete');
+    Route::post('/events/join/{id}', [EventController::class, 'joinInEvent'])->name('events/join');
+    Route::post('/events/leave/{id}', [EventController::class, 'leaveEvent'])->name('events/leave');
+
+    Route::get('/events/participant', function(){
+
+        $eventsAsParticipant = Auth::user()->eventsAsParticipant;
+        return view('events.participant', ['eventsAsParticipant' => $eventsAsParticipant]);
+    })->name('events/participant');
 });
 
 Route::get('/events/show/{id}', [EventController::class, 'show'])->name('events/show');

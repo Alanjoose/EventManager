@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class EventController extends Controller
 {
@@ -103,4 +104,21 @@ class EventController extends Controller
 
         return redirect('dashboard')->with('msg', 'Evento Excluído Com Sucesso!');
     }
+
+   public function joinInEvent($id)
+   {
+    $user = Auth::user();
+    $user->eventsAsParticipant()->attach($id);
+    $event = Event::findOrFail($id);
+    
+    return redirect('dashboard')->with('msg', 'Presença confirmada do evento ' . $event->name . ' com sucesso!');
+   }
+
+   public function leaveEvent($id)
+   {
+    $user = Auth::user();
+    $user->eventsAsParticipant()->detach($id);
+    $event = Event::findOrFail($id);
+    return redirect('events/participant')->with('msg', 'Presença removida do evento ' . $event->name . ' com sucesso!');
+   }
 }

@@ -16,27 +16,24 @@
                         </div>
                         @endif
                         <div class="col">
-                            <h2>Eventos</h2>
+                            <h2>Eventos que participo</h2>
                         </div>
                         <div class="col"></div>
                         <div class="col"></div>
                         <div class="col"></div>
-                        <div class="col">
-                            <a href="{{route('events/create')}}" class="btn btn-warning">Criar Evento</a>
-                        </div>
                     </div>
 
                     <div class="container-fluid">
-                        @foreach ($events as $event)
+                        @foreach ($eventsAsParticipant as $event)
                             <div class="container">
                                 <h4>{{$event->name}}</h4>
                                 <p>{{$event->description}}</p>
                                 <h5>{{$event->locale}}</h5>
                                 <span>{{$event->date}}</span>
                                 <div class="row">
-                                    <form action="{{route('events/join', $event->id)}}" method="post">
+                                    <form action="{{route('events/leave', $event->id)}}" method="post">
                                     @csrf
-                                    <button type="submit" class="btn btn-warning">Participar</button>
+                                    <button type="submit" class="btn btn-warning">Remover participação</button>
                                     </form>
                                 </div>
                             </div>
